@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luiz Fernando — Desenvolvedor Full Stack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2128;
+    --border: #30363d;
+    --accent: #58a6ff;
+    --accent-green: #3fb950;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --text-subtle: #6e7681;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(13,17,23,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo { font-family: 'Fira Code', monospace; font-size: 14px; color: var(--accent-green); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { font-size: 14px; color: var(--text-muted); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-btn {
+    background: var(--accent); color: #0d1117;
+    padding: 7px 18px; border-radius: 6px;
+    font-size: 13px; font-weight: 600; transition: opacity 0.2s;
+  }
+  .nav-btn:hover { opacity: 0.85; }
+
+  .hero { padding: 80px 40px; max-width: 900px; margin: 0 auto; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(63,185,80,0.1); border: 1px solid rgba(63,185,80,0.3);
+    color: var(--accent-green); padding: 5px 14px; border-radius: 20px;
+    font-size: 13px; font-family: 'Fira Code', monospace; margin-bottom: 28px;
+  }
+  .dot-green {
+    width: 8px; height: 8px; background: var(--accent-green);
+    border-radius: 50%; animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .hero h1 { font-size: 48px; font-weight: 700; line-height: 1.15; margin-bottom: 8px; }
+  .hero h1 span { color: var(--accent); }
+  .hero-role { font-family: 'Fira Code', monospace; font-size: 16px; color: var(--text-muted); margin-bottom: 24px; }
+  .hero-desc { font-size: 16px; color: var(--text-muted); max-width: 580px; margin-bottom: 36px; line-height: 1.75; }
+
+  .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+
+  .btn-primary {
+    background: var(--accent); color: #0d1117;
+    padding: 10px 24px; border-radius: 6px;
+    font-size: 14px; font-weight: 600;
+    transition: opacity 0.2s, transform 0.2s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  .btn-ghost {
+    background: transparent; border: 1px solid var(--border); color: var(--text);
+    padding: 10px 24px; border-radius: 6px; font-size: 14px; font-weight: 500;
+    transition: border-color 0.2s, transform 0.2s, color 0.2s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+  .stack-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip {
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text-muted); padding: 5px 14px; border-radius: 20px;
+    font-family: 'Fira Code', monospace; font-size: 12px;
+  }
+
+  .divider { height: 1px; background: var(--border); max-width: 900px; margin: 0 auto; }
+
+  section { padding: 72px 40px; max-width: 900px; margin: 0 auto; }
+
+  .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }
+  .section-header h2 { font-size: 22px; font-weight: 700; white-space: nowrap; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+  .section-num { font-family: 'Fira Code', monospace; font-size: 13px; color: var(--accent); }
+
+  .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .sobre-text p { color: var(--text-muted); margin-bottom: 16px; line-height: 1.8; }
+  .sobre-text p strong { color: var(--text); }
+
+  .sobre-info { display: flex; flex-direction: column; gap: 12px; }
+  .info-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 14px 16px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 8px;
+  }
+  .info-icon { font-size: 16px; width: 20px; flex-shrink: 0; margin-top: 1px; }
+  .info-label { font-size: 11px; color: var(--text-subtle); font-family: 'Fira Code', monospace; display: block; margin-bottom: 2px; }
+  .info-value { font-size: 14px; color: var(--text); font-weight: 500; }
+
+  .projeto-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 28px; margin-bottom: 16px;
+    transition: border-color 0.2s, transform 0.2s;
+    display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: start;
+  }
+  .projeto-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .projeto-card.featured {
+    border-color: rgba(88,166,255,0.3);
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(88,166,255,0.04) 100%);
+  }
+  .projeto-tag-destaque {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(88,166,255,0.1); border: 1px solid rgba(88,166,255,0.3);
+    color: var(--accent); padding: 3px 10px; border-radius: 4px;
+    font-size: 11px; font-family: 'Fira Code', monospace; margin-bottom: 12px;
+  }
+  .projeto-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+  .projeto-card p { font-size: 14px; color: var(--text-muted); line-height: 1.75; margin-bottom: 16px; }
+  .projeto-techs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .tech-tag {
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--text-muted); padding: 3px 10px; border-radius: 4px;
+    font-family: 'Fira Code', monospace; font-size: 11px;
+  }
+  .projeto-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--accent); font-size: 13px; font-weight: 500; transition: gap 0.2s;
+  }
+  .projeto-link:hover { gap: 10px; }
+  .projeto-num-big {
+    font-family: 'Fira Code', monospace; font-size: 48px;
+    font-weight: 700; color: var(--border); line-height: 1; user-select: none;
+  }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .skill-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px; }
+  .skill-card h4 {
+    font-family: 'Fira Code', monospace; font-size: 12px; color: var(--accent);
+    margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+  }
+  .skill-list { display: flex; flex-direction: column; gap: 10px; }
+  .skill-row { display: flex; justify-content: space-between; align-items: center; }
+  .skill-name { font-size: 14px; color: var(--text); }
+  .skill-dots { display: flex; gap: 4px; }
+  .skill-dot { width: 8px; height: 8px; border-radius: 2px; background: var(--border); }
+  .skill-dot.filled { background: var(--accent); }
+  .skill-dot.filled.green { background: var(--accent-green); }
+
+  .exp-item {
+    display: grid; grid-template-columns: 200px 1fr; gap: 32px;
+    padding: 28px 0; border-bottom: 1px solid var(--border);
+  }
+  .exp-item:first-child { border-top: 1px solid var(--border); }
+  .exp-periodo { font-family: 'Fira Code', monospace; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; display: block; }
+  .exp-empresa { font-size: 13px; color: var(--accent-green); font-weight: 500; }
+  .exp-right h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .exp-right p { font-size: 14px; color: var(--text-muted); line-height: 1.75; }
+
+  .cert-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .cert-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 18px 20px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .cert-icon {
+    width: 36px; height: 36px; background: var(--surface2);
+    border: 1px solid var(--border); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .cert-name { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+  .cert-info { font-size: 12px; color: var(--text-muted); font-family: 'Fira Code', monospace; }
+
+  #contato-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 80px 40px;
+  }
+  .contato-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .contato-text h2 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+  .contato-text p { color: var(--text-muted); line-height: 1.75; margin-bottom: 28px; }
+  .contato-links { display: flex; flex-direction: column; gap: 10px; }
+  .contato-link {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 16px; background: var(--surface2);
+    border: 1px solid var(--border); border-radius: 8px; font-size: 14px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .contato-link:hover { border-color: var(--accent); transform: translateX(4px); }
+  .contato-link-icon {
+    width: 32px; height: 32px; background: var(--surface);
+    border-radius: 6px; display: flex; align-items: center;
+    justify-content: center; font-size: 16px; flex-shrink: 0;
+  }
+  .contato-link-label { font-size: 11px; color: var(--text-subtle); font-family: 'Fira Code', monospace; display: block; }
+  .contato-link-value { font-size: 14px; color: var(--text); }
+
+  footer {
+    padding: 24px 40px; display: flex; justify-content: space-between;
+    align-items: center; max-width: 900px; margin: 0 auto;
+  }
+  footer p { font-size: 13px; color: var(--text-subtle); font-family: 'Fira Code', monospace; }
+
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links, .nav-btn { display: none; }
+    .hero { padding: 48px 20px; }
+    .hero h1 { font-size: 32px; }
+    section { padding: 48px 20px; }
+    .sobre-grid, .skills-grid, .cert-grid { grid-template-columns: 1fr; gap: 16px; }
+    .exp-item { grid-template-columns: 1fr; gap: 8px; }
+    .contato-inner { grid-template-columns: 1fr; gap: 32px; }
+    .projeto-card { grid-template-columns: 1fr; }
+    .projeto-num-big { display: none; }
+    #contato-section { padding: 48px 20px; }
+    footer { padding: 20px; flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">luiz@dev:~$</span>
+  <div class="nav-links">
+    <a href="#sobre">Sobre</a>
+    <a href="#projetos">Projetos</a>
+    <a href="#skills">Skills</a>
+    <a href="#experiencia">Experiência</a>
+  </div>
+  <a href="mailto:fernandovieirasantos10@gmail.com" class="nav-btn">Contato</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">
+    <div class="dot-green"></div>
+    Disponível para oportunidades
+  </div>
+  <h1>Luiz Fernando <span>Barros</span></h1>
+  <div class="hero-role">// Desenvolvedor Full Stack</div>
+  <p class="hero-desc">
+    Formando em Análise e Desenvolvimento de Sistemas.
+    Construo sistemas completos do banco de dados ao frontend —
+    com Node.js, Express, MySQL e JavaScript.
+  </p>
+  <div class="hero-cta">
+    <a href="#projetos" class="btn-primary">Ver projetos →</a>
+    <a href="https://github.com/LuizVfer" target="_blank" class="btn-ghost">GitHub ↗</a>
+    <a href="https://www.linkedin.com/in/luizfernandobvs/" target="_blank" class="btn-ghost">LinkedIn ↗</a>
+  </div>
+  <div class="stack-row">
+    <span class="chip">Node.js</span>
+    <span class="chip">Express</span>
+    <span class="chip">MySQL</span>
+    <span class="chip">JavaScript</span>
+    <span class="chip">HTML5</span>
+    <span class="chip">CSS3</span>
+    <span class="chip">JWT</span>
+    <span class="chip">Git</span>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<section id="sobre">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2>Sobre mim</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="sobre-grid reveal">
+    <div class="sobre-text">
+      <p>Tenho 22 anos, moro em <strong>Campo Grande — MS</strong> e estou no <strong>último semestre de ADS</strong> na Faculdade Insted.</p>
+      <p>Meu projeto principal é o <strong>QRUP</strong>, um sistema completo de catálogo e e-commerce com painel administrativo, autenticação JWT, importação de NF-e via XML e relatórios gerenciais com exportação em PDF.</p>
+      <p>Busco minha primeira oportunidade como <strong>desenvolvedor júnior</strong>, estágio ou freelance. Tenho disponibilidade imediata.</p>
+    </div>
+    <div class="sobre-info">
+      <div class="info-item">
+        <span class="info-icon">📍</span>
+        <div><span class="info-label">localização</span><span class="info-value">Campo Grande, MS — Brasil</span></div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🎓</span>
+        <div><span class="info-label">formação</span><span class="info-value">ADS — Faculdade Insted (último semestre)</span></div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">💼</span>
+        <div><span class="info-label">status</span><span class="info-value" style="color:var(--accent-green)">Disponível para oportunidades</span></div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🌐</span>
+        <div><span class="info-label">modalidade</span><span class="info-value">Presencial, híbrido ou remoto</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="projetos">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2>Projetos</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="projeto-card featured reveal">
+    <div>
+      <div class="projeto-tag-destaque">⭐ Projeto Principal</div>
+      <h3>QRUP — Sistema de Catálogo e E-commerce</h3>
+      <p>Sistema fullstack completo desenvolvido como projeto de faculdade. Conta com autenticação JWT, painel administrativo, carrinho de compras, importação de NF-e via XML, controle de estoque e relatórios gerenciais com exportação em PDF.</p>
+      <div class="projeto-techs">
+        <span class="tech-tag">Node.js</span><span class="tech-tag">Express</span>
+        <span class="tech-tag">MySQL</span><span class="tech-tag">JWT</span>
+        <span class="tech-tag">Multer</span><span class="tech-tag">HTML5</span>
+        <span class="tech-tag">CSS3</span><span class="tech-tag">JavaScript</span>
+      </div>
+      <a href="https://github.com/LuizVfer/QRUP" target="_blank" class="projeto-link">Ver no GitHub →</a>
+    </div>
+    <div class="projeto-num-big">01</div>
+  </div>
+
+  <div class="projeto-card reveal">
+    <div>
+      <h3>Clone Spotify — Jornada Full Stack</h3>
+      <p>Reprodução da interface do Spotify com HTML, CSS e JavaScript puro. Foco em layout responsivo e fidelidade visual ao produto original.</p>
+      <div class="projeto-techs">
+        <span class="tech-tag">HTML5</span><span class="tech-tag">CSS3</span><span class="tech-tag">JavaScript</span>
+      </div>
+      <a href="https://github.com/LuizVfer/Jornada-full-stack-spotify" target="_blank" class="projeto-link">Ver no GitHub →</a>
+    </div>
+    <div class="projeto-num-big">02</div>
+  </div>
+
+  <div class="projeto-card reveal">
+    <div>
+      <h3>Jogos — GameMaker</h3>
+      <p>Coleção de jogos desenvolvidos durante o curso NoNeClass (200h): Pong, Flappy Bird e Space Shooter. Implementação de física, colisão e sistema de pontuação.</p>
+      <div class="projeto-techs">
+        <span class="tech-tag">Game Maker</span><span class="tech-tag">GML</span>
+      </div>
+      <a href="https://github.com/LuizVfer" target="_blank" class="projeto-link">Ver no GitHub →</a>
+    </div>
+    <div class="projeto-num-big">03</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2>Habilidades</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-card">
+      <h4>⚙️ Backend</h4>
+      <div class="skill-list">
+        <div class="skill-row"><span class="skill-name">Node.js</span><div class="skill-dots"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div></div></div>
+        <div class="skill-row"><span class="skill-name">Express</span><div class="skill-dots"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div></div></div>
+        <div class="skill-row"><span class="skill-name">MySQL</span><div class="skill-dots"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div><div class="skill-dot"></div></div></div>
+        <div class="skill-row"><span class="skill-name">REST API</span><div class="skill-dots"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div></div></div>
+        <div class="skill-row"><span class="skill-name">JWT / Auth</span><div class="skill-dots"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div><div class="skill-dot"></div></div></div>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h4>🎨 Frontend</h4>
+      <div class="skill-list">
+        <div class="skill-row"><span class="skill-name">JavaScript</span><div class="skill-dots"><div class="skill-dot filled green"></div><div class="skill-dot filled green"></div><div class="skill-dot filled green"></div><div class="skill-dot filled green"></div><div class="skill-dot"></div></div></div>
+        <div class="skill-row"><span class="skill-name">HTML5</span><div class="skill-dots"><div class="skill-dot filled green"></div><div class="skill-dot filled green"></div><div class="skill-dot filled green"></div><div class="skill-dot filled green"></div><div class="skill-dot filled green"></div></div></div>
+        <div class="skill-row"><span class="skill-name">CSS3</span><div class="skill-dots"><div class="skill-dot filled green"></div><div class="skill-dot filled green"></div><div class="skill-dot filled green"></div><div class="skill-dot filled green"></div><div class="skill-dot"></div></div></div>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h4>🛠️ Ferramentas</h4>
+      <div class="skill-list">
+        <div class="skill-row"><span class="skill-name">Git / GitHub</span><div class="skill-dots"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div><div class="skill-dot"></div></div></div>
+        <div class="skill-row"><span class="skill-name">Pacote Office</span><div class="skill-dots"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div></div></div>
+        <div class="skill-row"><span class="skill-name">Game Maker</span><div class="skill-dots"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div><div class="skill-dot"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="experiencia">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2>Experiência</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="reveal">
+    <div class="exp-item">
+      <div class="exp-left"><span class="exp-periodo">2024 — Atualmente</span><span class="exp-empresa">WRP Telecom</span></div>
+      <div class="exp-right"><h3>Auxiliar de Escritório</h3><p>Organização de planilhas, cadastro de vendas e geração de relatórios. Uso diário do Pacote Office e sistemas internos da empresa.</p></div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-left"><span class="exp-periodo">2023 — 2024</span><span class="exp-empresa">Dallas Alimentos</span></div>
+      <div class="exp-right"><h3>Ajudante de Logística</h3><p>Preparação de cargas e entregas, organização de estoque e controle de pedidos.</p></div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-left"><span class="exp-periodo">2024 — 2026</span><span class="exp-empresa">Faculdade Insted</span></div>
+      <div class="exp-right"><h3>Análise e Desenvolvimento de Sistemas</h3><p>Último semestre. Desenvolvimento de sistemas, banco de dados, engenharia de software e projeto integrador (QRUP).</p></div>
+    </div>
+  </div>
+
+  <div class="section-header reveal" style="margin-top:56px">
+    <span class="section-num">05</span>
+    <h2>Certificações</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="cert-grid reveal">
+    <div class="cert-item"><div class="cert-icon">🎮</div><div><div class="cert-name">Desenvolvedor de Jogos</div><div class="cert-info">NoNeClass · 200h · Fev/2026</div></div></div>
+    <div class="cert-item"><div class="cert-icon">☕</div><div><div class="cert-name">Java Básico</div><div class="cert-info">Curso em Vídeo · 40h · Out/2024</div></div></div>
+    <div class="cert-item"><div class="cert-icon">🌐</div><div><div class="cert-name">HTML5 e CSS3: Módulo 1</div><div class="cert-info">Curso em Vídeo · 40h · Abr/2025</div></div></div>
+    <div class="cert-item"><div class="cert-icon">🤖</div><div><div class="cert-name">Imersão Dev com Google Gemini</div><div class="cert-info">Alura · 4h · Set/2024</div></div></div>
+  </div>
+</section>
+
+<div id="contato-section">
+  <div class="contato-inner">
+    <div class="contato-text reveal">
+      <h2>Vamos conversar?</h2>
+      <p>Disponível para estágio, emprego júnior e freelance. Pode me chamar por qualquer canal — respondo rápido.</p>
+      <a href="mailto:fernandovieirasantos10@gmail.com" class="btn-primary">Enviar e-mail →</a>
+    </div>
+    <div class="contato-links reveal">
+      <a href="mailto:fernandovieirasantos10@gmail.com" class="contato-link">
+        <div class="contato-link-icon">✉️</div>
+        <div><span class="contato-link-label">e-mail</span><span class="contato-link-value">fernandovieirasantos10@gmail.com</span></div>
+      </a>
+      <a href="https://www.linkedin.com/in/luizfernandobvs/" target="_blank" class="contato-link">
+        <div class="contato-link-icon">💼</div>
+        <div><span class="contato-link-label">linkedin</span><span class="contato-link-value">linkedin.com/in/luizfernandobvs</span></div>
+      </a>
+      <a href="https://github.com/LuizVfer" target="_blank" class="contato-link">
+        <div class="contato-link-icon">🐙</div>
+        <div><span class="contato-link-label">github</span><span class="contato-link-value">github.com/LuizVfer</span></div>
+      </a>
+      <a href="https://wa.me/5567992181941" target="_blank" class="contato-link">
+        <div class="contato-link-icon">💬</div>
+        <div><span class="contato-link-label">whatsapp</span><span class="contato-link-value">(67) 9 9218-1941</span></div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Luiz Fernando Barros Vieira Dos Santos</p>
+  <p>Campo Grande — MS</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
